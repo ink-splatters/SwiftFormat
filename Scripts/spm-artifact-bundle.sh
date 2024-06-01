@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# shellcheck disable=SC2086
 set -e
 
 # By default, parses the current version from `Sources/SwiftFormat.swift`.
@@ -25,7 +25,7 @@ mkdir $ARTIFACT_BUNDLE
 cp LICENSE.md $ARTIFACT_BUNDLE
 
 # Create bundle info.json from template, replacing version
-sed 's/__VERSION__/'"${VERSION}"'/g' $INFO_TEMPLATE > "${ARTIFACT_BUNDLE}/info.json"
+sed 's/__VERSION__/'"${VERSION}"'/g' $INFO_TEMPLATE >"${ARTIFACT_BUNDLE}/info.json"
 
 # Copy macOS SwiftFormat binary into bundle
 chmod +x $MAC_EXECUTABLE
@@ -37,12 +37,7 @@ chmod +x $LINUX_EXECUTABLE
 mkdir -p $LINUX_BINARY_OUTPUT_DIR
 cp $LINUX_EXECUTABLE $LINUX_BINARY_OUTPUT_DIR
 
-# Copy Linux AArch64 SwiftFormat binary into bundle
-chmod +x $LINUX_AARCH64_EXECUTABLE
-mkdir -p $LINUX_AARCH64_BINARY_OUTPUT_DIR
-cp $LINUX_AARCH64_EXECUTABLE $LINUX_AARCH64_BINARY_OUTPUT_DIR
-
-# Create ZIP using 7z
-7z a -tzip -mx=9 "${ARTIFACT_BUNDLE}.zip" "$ARTIFACT_BUNDLE"
+# Create ZIP
+zip -yr - $ARTIFACT_BUNDLE >"${ARTIFACT_BUNDLE}.zip"
 
 rm -rf $ARTIFACT_BUNDLE
