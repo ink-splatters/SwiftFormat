@@ -4,12 +4,18 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/default";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
     };
     pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
+      # has "language-dialect" option implemented for `shfmt`,
+      # not yet merged to the upstream
+      url = "github:ink-splatters/git-hooks.nix/shfmt-language-dialect";
       inputs = {
         gitignore.follows = "gitignore";
         nixpkgs.follows = "nixpkgs";

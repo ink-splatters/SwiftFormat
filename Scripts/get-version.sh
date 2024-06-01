@@ -2,11 +2,12 @@
 
 set -e
 
-REGEX="let swiftFormatVersion = \"([0-9]+.[0-9]+.[0-9]+)\""
+REGEX='let swiftFormatVersion = "([0-9]+.[0-9]+.[0-9]+)"'
 while IFS= read -r line; do
-    if [[ $line =~ $REGEX ]]
-    then
-        echo "${BASH_REMATCH[1]}"
-        break
-    fi
-done < Sources/SwiftFormat.swift
+	# shellcheck disable=SC3010
+	if [[ $line =~ $REGEX ]]; then
+		# shellcheck disable=SC3028,SC3054
+		echo "${BASH_REMATCH[1]}"
+		break
+	fi
+done <Sources/SwiftFormat.swift

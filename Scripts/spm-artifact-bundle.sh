@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# shellcheck disable=SC2086
 set -e
 
 ARTIFACT_BUNDLE=swiftformat.artifactbundle
@@ -14,7 +14,7 @@ mkdir $ARTIFACT_BUNDLE
 cp LICENSE.md $ARTIFACT_BUNDLE
 
 # Create bundle info.json from template, replacing version
-sed 's/__VERSION__/'"${VERSION}"'/g' $INFO_TEMPLATE > "${ARTIFACT_BUNDLE}/info.json"
+sed 's/__VERSION__/'"${VERSION}"'/g' $INFO_TEMPLATE >"${ARTIFACT_BUNDLE}/info.json"
 
 # Copy macOS SwiftFormat binary into bundle
 mkdir -p $MAC_BINARY_OUTPUT_DIR
@@ -25,6 +25,6 @@ mkdir -p $LINUX_BINARY_OUTPUT_DIR
 cp CommandLineTool/swiftformat_linux $LINUX_BINARY_OUTPUT_DIR
 
 # Create ZIP
-zip -yr - $ARTIFACT_BUNDLE > "${ARTIFACT_BUNDLE}.zip"
+zip -yr - $ARTIFACT_BUNDLE >"${ARTIFACT_BUNDLE}.zip"
 
 rm -rf $ARTIFACT_BUNDLE

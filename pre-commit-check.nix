@@ -17,7 +17,12 @@ pre-commit-hooks.lib.${system}.run {
     };
     statix.enable = true;
     shellcheck.enable = true;
-    shfmt.enable = true;
+    shfmt = {
+      enable = true;
+      # github:ink-splatters/git-hooks.nix/shfmt-language-dialect = "bash";
+      # absent in upstream for now
+      settings.language-dialect = "bash";
+    };
   };
 
   tools = pkgs;
